@@ -62,13 +62,14 @@ void bfs(int s, int d, int n) {
     return;
 }
 
-vector<int> path(int d) {
+vector<int> path(int d, int s) {
     vector<int> p;
     p.push_back(d);
-    while(pred[d] != -1) {
+    while(pred[d] != s) {
         p.push_back(pred[d]);
         d = pred[d];
     }
+    p.push_back(s);
     vector<int> x;
     for(int i = p.size() - 1; i >= 0; i--) {
         x.push_back(p[i]);
@@ -86,12 +87,16 @@ int main() {
         addEdge(x, y);
     }
     cin>>x>>y;
+    if(n == 1) {
+        cout<<1<<endl<<1;
+        return 0;
+    }
     for(int i = 0; i < n; i++) {
         sort(adj[i].begin(), adj[i].end());
     }
     bfs(x, y, n);
     cout<<endl;
-    vector<int> p = path(y);
+    vector<int> p = path(y, x);
     cout<<p.size()<<endl;
     for(int i = 0; i < p.size(); i++) {
         if(i == p.size() - 1) {
@@ -103,3 +108,4 @@ int main() {
     }
     return 0;
 }
+
